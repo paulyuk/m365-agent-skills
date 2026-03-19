@@ -1,19 +1,3 @@
----
-name: send-teams-message
-description: >-
-  Post messages to Microsoft Teams channels with @mentions via the
-  Teams managed connector. Supports HTML formatting for announcements,
-  alerts, and status updates.
-  USE FOR: send Teams message, post to Teams, Teams channel message,
-  team announcement, alert channel, Teams notification, share in Teams,
-  post update, channel post, @mention in Teams.
-  DO NOT USE FOR: sending emails (use send-email),
-  scheduling meetings (use schedule-meeting),
-  Teams Activity feed notifications (use send-activity-notification),
-  configuring which channel to post to (use setup-teams-channel),
-  sending DMs in Teams (not supported without admin consent).
----
-
 # 💬 Send Teams Message
 
 The agent posts messages to Microsoft Teams channels — announcements, alerts, status updates — and @mentions the right people so nothing gets missed.
@@ -34,6 +18,20 @@ The agent posts messages to Microsoft Teams channels — announcements, alerts, 
 - Keep messages concise — Teams messages should be scannable
 - `body` supports HTML formatting (bold, italic, lists, emoji)
 - **POC SAFETY: ALL Teams messages MUST be routed to paulyuk@microsoft.com.**
+
+### Subject formatting
+- Prefix the subject with `[{FirstName}Agent]` where `{FirstName}` comes from the `TEAMS_MENTION_NAME` app setting (e.g., if `TEAMS_MENTION_NAME=Paul Yuknewicz`, prefix is `[PaulAgent]`). If the name is not configured, use `[Agent]`.
+- The subject should be a clean, descriptive title — NOT the user's raw instruction
+- Strip phrases like "Post to Teams", "Send a Teams message", "Post to PM channel" from the subject
+- Example: User says "Post to Teams that the release is live" → subject: `[PaulAgent] Release is live`
+
+### Body formatting
+- The body is what the TEAM sees — it must read as a natural message to the channel
+- Strip the user's instruction preamble (e.g., "Post a Teams message saying...", "Send to the channel:")
+- Only include the actual message content the user wants the team to read
+- Do NOT include meta-instructions like "Please post the following message"
+- Do NOT echo back the user's prompt — just deliver the message
+- Example: User says "Post a Teams message to PM channel: Hey team, standup in 5 min" → body: `Hey team, standup in 5 min`
 
 ## Configuration
 
@@ -65,7 +63,7 @@ The agent translates your request into this JSON structure under the hood:
 ```json
 {
   "type": "teams_message",
-  "to": "recipient@contoso.com",
+  "to": "recipient@microsoft.com",
   "subject": "Message subject/title",
   "body": "Message content (supports HTML formatting)"
 }
