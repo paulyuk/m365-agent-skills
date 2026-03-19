@@ -1,0 +1,11 @@
+{
+  "name": "m365-agent-skills",
+  "description": "M365 agent skills for email, calendar, Teams, and activity notifications via Azure managed connectors. Works with azure-functions-connectors-python SDK or any LLM agent.",
+  "version": "1.0.0",
+  "author": {
+    "name": "CoreAI Microsoft",
+    "url": "https://github.com/coreai-microsoft"
+  },
+  "homepage": "https://github.com/coreai-microsoft/m365-agent-poc",
+  "keywords": ["m365", "office365", "teams", "email", "calendar", "connectors", "azure-functions"]
+}
